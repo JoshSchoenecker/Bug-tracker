@@ -11,20 +11,52 @@ let baseUrl = location.host.includes("localhost")
 
 let api = Axios.create({
   baseURL: baseUrl + "api",
-  timeout: 3000,
+  timeout: 15000,
   withCredentials: true
 });
 
 export default new Vuex.Store({
   state: {
-    profile: {}
+    profile: {},
+    flaws: [],
+    flaw: {},
+    activeFlaw: {},
   },
   mutations: {
     setProfile(state, profile) {
       state.profile = profile;
+    },
+    setFlaws(state, flaws){
+      state.flaws = flaws
+    },
+    setActiveFlaw(state, flaw){
+      state.activeFlaw = flaw
     }
   },
   actions: {
+
+    // #region -- Flaws --
+    async getFlaws({commit, dispatch}){
+      try {
+        let res = await api.get('flaws')
+        commit('setFlaws', res.data)
+      } catch (error) {
+        console.error(error, "Get Flaws has failed");
+      }
+    },
+    async createFlaw({commit, dispatch}, flawData){
+      try {
+        let res = await api.post('flaws/', flawData)
+        console.log("create flaw:",res);
+        
+        dispatch('getFlaws')
+      } catch (error) {
+        console.error(error, "Create Flaw has failed");
+      }
+    },
+    // #endregion
+
+    // #region -- AUTH STUFF --
     setBearer({}, bearer) {
       api.defaults.headers.authorization = bearer;
     },
@@ -39,5 +71,6 @@ export default new Vuex.Store({
         console.error(error);
       }
     }
+    //#endregion
   }
 });

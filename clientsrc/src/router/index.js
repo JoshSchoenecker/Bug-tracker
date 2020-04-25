@@ -28,6 +28,12 @@ const routes = [
     component: FlawsPage,
     beforeEnter: authGuard
   },
+  {
+    path: "/flaws/:flawId",
+    name: "flaw",
+    component: "Flaw",
+    beforeEnter: authGuard
+  }
 ];
 
 const router = new VueRouter({
