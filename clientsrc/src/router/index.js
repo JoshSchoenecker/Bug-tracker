@@ -4,6 +4,8 @@ import VueRouter from "vue-router";
 import Home from "../views/Home.vue";
 // @ts-ignore
 import Profile from "../views/Profile.vue";
+// @ts-ignore
+import FlawsPage from '../views/FlawsPage.vue' 
 import { authGuard } from "@bcwdev/auth0-vue";
 
 Vue.use(VueRouter);
@@ -19,7 +21,13 @@ const routes = [
     name: "Profile",
     component: Profile,
     beforeEnter: authGuard
-  }
+  },
+  {
+    path: "/flaws",
+    name: "FlawsPage",
+    component: FlawsPage,
+    beforeEnter: authGuard
+  },
 ];
 
 const router = new VueRouter({
