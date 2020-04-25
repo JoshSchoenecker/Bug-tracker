@@ -22,7 +22,7 @@ export class FlawController extends BaseController {
   }
   async create(req, res, next) {
     try {
-        req.body.ceatorEmail = req.userInfo.email
+        req.body.creatorEmail = req.userInfo.email
         let data = await flawService.create(req.body)
         // returning status 201 gives us a Create succeded status
         return res.status(201).send(data)
@@ -40,7 +40,7 @@ try {
 }
   async getAll(req, res, next) {
 try {
-    let data = await flawService.getAll(req.user.email)
+    let data = await flawService.getAll()
     return res.send(data)
 } catch (error) {
     next(error)

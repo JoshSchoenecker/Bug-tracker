@@ -7,8 +7,9 @@ class FlawService{
         return data
     }
 
-    async getAll(userEmail) {
-        return await dbContext.Flaws.find({ creatorEmail: userEmail }).populate("creator", "name picture")
+    async getAll() {
+        return await dbContext.Flaws.find()
+        // .populate("creator", "name picture")
     }
 
     async getById(id, userEmail) {
