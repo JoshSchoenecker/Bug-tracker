@@ -2,13 +2,17 @@ import { dbContext } from "../db/DbContext"
 import { BadRequest } from "../utils/Errors"
 
 class NoteService{
+    async getNotesByFlawId(id, email) {
+        return await dbContext.Notes.find({creatorEmail: email, flawId: id})
+    }
     async create(rawData) {
         let data = await dbContext.Notes.create(rawData)
         return data
     }
 
     async getAll(userEmail) {
-        return await dbContext.Notes.find({ creatorEmail: userEmail }).populate("creator", "name picture")
+        return await dbContext.Notes.find({ creatorEmail: userEmail })
+        // .populate("creator", "name picture")
     }
 
     async getById(id, userEmail) {
