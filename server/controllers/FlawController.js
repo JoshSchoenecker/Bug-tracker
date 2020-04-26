@@ -2,8 +2,17 @@ import express from "express";
 import BaseController from "../utils/BaseController";
 import auth0provider from "@bcwdev/auth0provider";
 import { flawService } from "../services/FlawService";
+import { noteService } from "../services/NoteService"
 
 export class FlawController extends BaseController {
+  async getNotesByFlawId(req, res, next) {
+    try {
+      let data = await noteService.getNotesByFlawId(req.params.id, req.userInfo.email)
+      return res.send(data)
+    } catch (error) {
+      next(error)
+    }
+  }
   async delete(req, res, next) {
     try {
       await flawService.delete(req.params.id, req.userInfo.email);
@@ -54,6 +63,7 @@ try {
       .use(auth0provider.getAuthorizedUserInfo)
       .get("", this.getAll)
       .get("/:id", this.getById)
+      .get("/:id/notes", this.getNotesByFlawId)
       .post("", this.create)
       .put("/id", this.edit)
       .delete("/id", this.delete);
