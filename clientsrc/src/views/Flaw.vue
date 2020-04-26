@@ -1,6 +1,6 @@
 <template>
-  <div class="flaw container-fluid vh-100">
 
+  <div class="flaw container-fluid vh-100">
     <!-- NOTE Flaw Details -->
     <div class="row mt-5 pt-5">
       <div class="card w-75 m-auto shadow">
@@ -33,19 +33,41 @@
       </div>
     </div>
 
-    <!-- NOTE Flaw Notes -->
-    <div class="row">
-<note v-for="note in notes" :noteData="note" :key="note.id" />
+    <!-- NOTE Flaw Notes Header-->
+      <div class="row card mx-4 pt-5 offsetMarg">
+      <div class="col-12">
+        <div class="row">
+          <div class="col-2">
+            <h2>Name</h2>
+          </div>
+          <div class="col-8">
+            <h2>Message</h2>
+          </div>
+          <div class="col-2">
+            <h2>Delete</h2>
+          </div>
+        </div>
+      </div>
+
+      <!-- Notes  are injected here -->
+      <note v-for="note in notes" :noteData="note" :key="note._id" />
     </div>
+
+      <!-- Create Note injected here -->
+    <div class="row">
+      <div class="col-6 mx-auto my-4 text-center">
+        <CreateNote v-if="$auth.isAuthenticated" />
+      </div>
+      </div>
   </div>
 
 </template>
 
 <script>
-import Note from '../components/Note.vue'
+import CreateNote from "../components/CreateNote.vue";
+import Note from "../components/Note.vue";
 export default {
   name: "flaw",
-  props: ["noteData"],
   data() {
     return {};
   },
@@ -53,18 +75,23 @@ export default {
     flaw() {
       return this.$store.state.activeFlaw;
     },
-    notes(){
-      return this.$store.state.notes
-    },
+    notes() {
+      return this.$store.state.notes;
+      console.log("flawPage computed: ", this.$store.state.notes);
+    }
   },
   methods: {},
-  components: {Note},
+  components: { Note, CreateNote },
   mounted() {
     this.$store.dispatch("getFlaw", this.$route.params.flawId);
-    this.$store.dispatch("getNotes", this.$route.params.flawId)
-  },
+    this.$store.dispatch("getNotes", this.$route.params.flawId);
+  }
 };
 </script>
 
 <style scoped>
+.offsetMarg{
+  position: ;
+  margin-top: ;
+}
 </style>

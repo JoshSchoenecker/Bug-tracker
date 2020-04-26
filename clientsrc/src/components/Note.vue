@@ -1,19 +1,14 @@
 <template>
     <div class="note">
-        <!-- NOTE Notes header-->
+    <div class="card-body border-top border-dark">
         <div class="row">
-            <div class="col-2">
-                <h2>Name</h2>
-            </div>
-            <div class="col-8">
-                <h2>Message</h2>
-            </div>
-            <div class="col-2">
-                <h2>Delete</h2>
+            <div class="col-12">
+                {{noteData.creatorEmail}}
+                {{noteData.content}}
+                <!-- TODO delete button for a note -->
             </div>
         </div>
-        <!-- NOTE Note are injected here -->
-        <div class="row"></div>
+    </div>
     </div>
 </template>
 
@@ -21,8 +16,15 @@
 <script>
 export default {
     name: 'note',
+    props: ["noteData"],
     data(){
         return {}
+    },
+    mounted(){
+        this.$store.dispatch("getNotes", this.$route.params.noteId)
+        console.log("getNotes Mounted:", this.$route.params.noteId)
+        this.$store.dispatch("getFlaw", this.$route.params.flawId)
+        console.log("getFlaw Mounted:", this.$route.params.flawId);
     },
     computed:{},
     methods:{},
