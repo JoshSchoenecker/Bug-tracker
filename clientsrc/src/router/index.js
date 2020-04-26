@@ -1,11 +1,13 @@
 import Vue from "vue";
 import VueRouter from "vue-router";
+//#region --App Views--
 // @ts-ignore
 import Home from "../views/Home.vue";
 // @ts-ignore
 import Profile from "../views/Profile.vue";
 // @ts-ignore
 import FlawsPage from '../views/FlawsPage.vue' 
+//#endregion
 import { authGuard } from "@bcwdev/auth0-vue";
 
 Vue.use(VueRouter);
@@ -31,8 +33,9 @@ const routes = [
   {
     path: "/flaws/:flawId",
     name: "flaw",
-    component: "Flaw",
-    beforeEnter: authGuard
+    beforeEnter: authGuard,
+    // @ts-ignore
+    component: () => import (/*webpackChunkName: "flaw" */ '../views/Flaw.vue'),
   }
 ];
 
