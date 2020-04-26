@@ -21,7 +21,7 @@ export default new Vuex.Store({
     flaws: [],
     flaw: {},
     activeFlaw: {},
-    notes: {},
+    notes: [],
   },
   mutations: {
     setProfile(state, profile) {
@@ -49,7 +49,8 @@ export default new Vuex.Store({
     },
     async createFlaw({ dispatch }, flawData) {
       try {
-        await api.post(`flaws/${flawData}`);
+        debugger
+        await api.post('flaws', flawData);
         dispatch("getFlaws");
       } catch (error) {
         console.error("Create Flaw has failed:", error);
@@ -67,11 +68,21 @@ export default new Vuex.Store({
     //#region -- Notes --
     async getNotes({commit}, flawId){
       try {
-        let res = await api.get(`flaws/${flawId}/notes`)
-        console.log("store-getNotes: ", res.data);
+        let res = await api.get('flaws/', flawId)
+        console.log("store-getNotes: ", res);
         commit('setNotes', res.data)
       } catch (error) {
         console.error("Get Notes has failed: ", error);
+      }
+    },
+    async addNote({dispatch}, noteId){
+      try {
+        // TODO returning weird data
+        let res = await api.post('notes/', noteId.data)
+        console.log("addNote: ", res);
+        dispatch("getNotes", noteId.flawId)
+      } catch (error) {
+        console.error(error);
       }
     },
     //#endregion
