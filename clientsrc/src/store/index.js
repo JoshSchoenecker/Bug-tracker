@@ -21,6 +21,7 @@ export default new Vuex.Store({
     flaws: [],
     flaw: {},
     activeFlaw: {},
+    notes: {},
   },
   mutations: {
     setProfile(state, profile) {
@@ -31,6 +32,9 @@ export default new Vuex.Store({
     },
     setActiveFlaw(state, flaw) {
       state.activeFlaw = flaw;
+    },
+    setNotes(state, notes){
+      state.notes = notes
     },
   },
   actions: {
@@ -45,8 +49,7 @@ export default new Vuex.Store({
     },
     async createFlaw({ dispatch }, flawData) {
       try {
-        let res = await api.post(`flaws/${flawData}`);
-        console.log("createFlaw", res);
+        await api.post(`flaws/${flawData}`);
         dispatch("getFlaws");
       } catch (error) {
         console.error("Create Flaw has failed:", error);
@@ -55,7 +58,6 @@ export default new Vuex.Store({
     async getFlaw({ commit }, flawId) {
       try {
         let res = await api.get(`flaws/${flawId}`);
-        console.log("store-getFlaw: ", res);
         commit("setActiveFlaw", res.data);
       } catch (error) {
         console.error(error);
@@ -63,7 +65,15 @@ export default new Vuex.Store({
     },
     // #endregion
     //#region -- Notes --
-    
+    async getNotes({commit}, flawId){
+      try {
+        let res = await api.get(`flaws/${flawId}/notes`)
+        console.log("store-getNotes: ", res.data);
+        commit('setNotes', res.data)
+      } catch (error) {
+        console.error("Get Notes has failed: ", error);
+      }
+    },
     //#endregion
     // #region -- auth0 --
     setBearer({}, bearer) {

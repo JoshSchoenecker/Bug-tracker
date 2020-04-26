@@ -35,28 +35,34 @@
 
     <!-- NOTE Flaw Notes -->
     <div class="row">
-
+<note v-for="note in notes" :noteData="note" :key="note.id" />
     </div>
   </div>
 
 </template>
 
 <script>
+import Note from '../components/Note.vue'
 export default {
   name: "flaw",
+  props: ["noteData"],
   data() {
     return {};
   },
   computed: {
     flaw() {
       return this.$store.state.activeFlaw;
-    }
+    },
+    notes(){
+      return this.$store.state.notes
+    },
   },
   methods: {},
-  components: {},
+  components: {Note},
   mounted() {
     this.$store.dispatch("getFlaw", this.$route.params.flawId);
-  }
+    this.$store.dispatch("getNotes", this.$route.params.flawId)
+  },
 };
 </script>
 
