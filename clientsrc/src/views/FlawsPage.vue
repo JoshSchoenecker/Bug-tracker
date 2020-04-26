@@ -1,5 +1,5 @@
 <template>
-    <div class="FlawsPage container-fluid">
+    <div class="FlawsPage container-fluid vh-100">
         <hr/>
         <!-- NOTE create flaw comp -->
    <CreateFlaw v-if="$auth.isAuthenticated"/>
