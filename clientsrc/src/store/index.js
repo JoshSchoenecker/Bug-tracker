@@ -30,11 +30,14 @@ export default new Vuex.Store({
     setFlaws(state, flaws) {
       state.flaws = flaws;
     },
+    setFlaw(state, flaw){
+      state.flaw = flaw
+    },
     setActiveFlaw(state, flaw) {
       state.activeFlaw = flaw;
     },
-    setNotes(state, notes){
-      state.notes = notes
+    setNotes(state, notes) {
+      state.notes = notes;
     },
   },
   actions: {
@@ -49,8 +52,7 @@ export default new Vuex.Store({
     },
     async createFlaw({ dispatch }, flawData) {
       try {
-        debugger
-        await api.post('flaws', flawData);
+        await api.post("flaws", flawData);
         dispatch("getFlaws");
       } catch (error) {
         console.error("Create Flaw has failed:", error);
@@ -64,23 +66,41 @@ export default new Vuex.Store({
         console.error(error);
       }
     },
+    async deleteFlaw({ dispatch }, flawId) {
+      try {
+        await api.delete('flaws/' + flawId)
+        dispatch('getFlaws')
+      } catch (error) {
+        console.error(error);
+      }
+    },
+    // TODO edit now working for some reason backend?
+    async editFlaw({commit, dispatch}, flaw){
+      try {
+        let res = await api.put('flaws/' + flaw.id, flaw)
+        commit('setFlaw', res.data)
+        dispatch('getFlaw', flaw.id)
+      } catch (error) {
+        console.error(error);
+      }
+    },
     // #endregion
     //#region -- Notes --
-    async getNotes({commit}, flawId){
+    async getNotes({ commit }, flawId) {
       try {
-        let res = await api.get('flaws/', flawId)
-        console.log("store-getNotes: ", res);
-        commit('setNotes', res.data)
+        let res = await api.get("flaws/" + flawId + "/notes");
+        console.log("store-getNotes: ", res.data);
+        commit("setNotes", res.data);
       } catch (error) {
         console.error("Get Notes has failed: ", error);
       }
     },
-    async addNote({dispatch}, noteId){
+    async addNote({ dispatch }, noteId) {
       try {
         // TODO returning weird data
-        let res = await api.post('notes/', noteId.data)
+        let res = await api.post("notes/", noteId.data);
         console.log("addNote: ", res);
-        dispatch("getNotes", noteId.flawId)
+        dispatch("getNotes", noteId.flawId);
       } catch (error) {
         console.error(error);
       }

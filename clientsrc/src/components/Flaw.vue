@@ -57,9 +57,10 @@ export default {
           this.$store.commit('setActiveFlaw', {})
           this.$router.push({
               name: "flaw",
-              params: {flawId: this.flawData.id}
+              params: {flawId: this.flawData._id}
           })
       },
+      
   },
   components: {}
 };

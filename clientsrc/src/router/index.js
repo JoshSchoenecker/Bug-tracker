@@ -6,7 +6,7 @@ import Home from "../views/Home.vue";
 // @ts-ignore
 import Profile from "../views/Profile.vue";
 // @ts-ignore
-import FlawsPage from '../views/FlawsPage.vue' 
+import FlawsPage from "../views/FlawsPage.vue";
 //#endregion
 import { authGuard } from "@bcwdev/auth0-vue";
 
@@ -16,31 +16,35 @@ const routes = [
   {
     path: "/",
     name: "Home",
-    component: Home
+    component: Home,
   },
   {
     path: "/profile",
     name: "Profile",
     component: Profile,
-    beforeEnter: authGuard
+    beforeEnter: authGuard,
   },
   {
     path: "/flaws",
     name: "FlawsPage",
     component: FlawsPage,
-    beforeEnter: authGuard
+    beforeEnter: authGuard,
   },
   {
     path: "/flaws/:flawId",
     name: "flaw",
     beforeEnter: authGuard,
     // @ts-ignore
-    component: () => import (/*webpackChunkName: "flaw" */ '../views/Flaw.vue'),
-  }
+    component: () => import(/*webpackChunkName: "flaw" */ "../views/Flaw.vue"),
+  },
+  {
+    path: "*",
+    redirect: "/",
+  },
 ];
 
 const router = new VueRouter({
-  routes
+  routes,
 });
 
 export default router;

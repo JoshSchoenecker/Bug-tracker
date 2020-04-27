@@ -15,7 +15,7 @@ export class FlawController extends BaseController {
   }
   async delete(req, res, next) {
     try {
-      await flawService.delete(req.params.id, req.userInfo.email);
+      await flawService.delete(req.params.id);
       return res.send("Item Deleted");
     } catch (error) {
       next(error);
@@ -65,7 +65,7 @@ try {
       .get("/:id", this.getById)
       .get("/:id/notes", this.getNotesByFlawId)
       .post("", this.create)
-      .put("/id", this.edit)
-      .delete("/id", this.delete);
+      .put("/:id", this.edit)
+      .delete("/:id", this.delete);
   }
 }

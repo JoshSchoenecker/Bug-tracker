@@ -1,10 +1,10 @@
 <template>
   <div class="CreateNote">
-    <div>
-      <input type="text" class="form-control" placeholder="Add Note" v-model="newNote.content" />
-      <button type="submit" class="btn" @click="addNote()">Send</button>
+    <form @submit.prevent="addNote()">
+      <input type="text" class="form-control" placeholder="Add Note" v-model="newNote.content"/>
+      <button type="submit" class="btn">Send</button>
+  </form>
     </div>
-  </div>
 </template>
 
 
@@ -18,7 +18,8 @@ export default {
   },
   computed: {
     activeFlawId() {
-      return this.$store.state.activeFlaw.id;
+      return this.$store.state.activeFlaw._id;
+      console.log("activeFlawId: ",this.$store.state.activeFlaw._id);
     }
   },
   methods: {

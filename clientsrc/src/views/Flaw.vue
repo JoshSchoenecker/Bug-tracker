@@ -1,12 +1,31 @@
 <template>
-
   <div class="flaw container-fluid vh-100">
     <!-- NOTE Flaw Details -->
     <div class="row mt-5 pt-5">
       <div class="card w-75 m-auto shadow">
+        <button class="text-danger" @click="deleteFlaw()">
+          <span>&times;</span>
+        </button>
+        <span>
+          <button
+            v-if="$auth.isAuthenticated"
+            class="btn btn-warning shadow"
+            @click="editing = !editing"
+          >Edit Flaw</button>
+          <form v-if="editing" @submit.prevent="editFlaw">
+            <input type="text" v-model="flaw.title" />
+            <input type="text" v-model="flaw.description" />
+            <button
+              type="submit"
+              v-if="$auth.isAuthenticated"
+              class="btn btn-primary shadow"
+            >Confirm</button>
+          </form>
+        </span>
         <div class="col-6">
           <!-- Flaw Title -->
           <div class="card-title">
+            
             <h4 class="mb-0 mt-4">Flaw</h4>
             <h1 class="pl-2" style="font-size:5rem">{{flaw.title}}</h1>
           </div>
@@ -34,7 +53,7 @@
     </div>
 
     <!-- NOTE Flaw Notes Header-->
-      <div class="row card mx-4 pt-5 offsetMarg">
+    <div class="row card mx-4 pt-5 offsetMarg">
       <div class="col-12">
         <div class="row">
           <div class="col-2">
@@ -53,14 +72,13 @@
       <note v-for="note in notes" :noteData="note" :key="note._id" />
     </div>
 
-      <!-- Create Note injected here -->
+    <!-- Create Note injected here -->
     <div class="row">
       <div class="col-6 mx-auto my-4 text-center">
         <CreateNote v-if="$auth.isAuthenticated" />
       </div>
-      </div>
+    </div>
   </div>
-
 </template>
 
 <script>
@@ -69,28 +87,42 @@ import Note from "../components/Note.vue";
 export default {
   name: "flaw",
   data() {
-    return {};
+    return {
+      editing: false,
+    };
   },
   computed: {
     flaw() {
       return this.$store.state.activeFlaw;
     },
     notes() {
-      return this.$store.state.notes;
-      console.log("flawPage computed: ", this.$store.state.notes);
+      return this.$store.state.activeFlaw.notes;
+      console.log("flawPage computed: ", this.$store.state.activeFlaw.notes);
     }
   },
-  methods: {},
+  methods: {
+    deleteFlaw(){
+      let deleteFlaw = this.$route.params.flawId
+      console.log(this.$route.params.flawId);
+      this.$store.dispatch('deleteFlaw', deleteFlaw)
+      this.$router.push({ name: "FlawsPage" });
+    },
+    editFlaw(){
+      this.$store.dispatch('editFlaw', this.flaw)
+      this.editing = false;
+    },
+  },
   components: { Note, CreateNote },
   mounted() {
     this.$store.dispatch("getFlaw", this.$route.params.flawId);
     this.$store.dispatch("getNotes", this.$route.params.flawId);
+    console.log("mounted: ", this.$route.params.flawId);
   }
 };
 </script>
 
 <style scoped>
-.offsetMarg{
+.offsetMarg {
   position: ;
   margin-top: ;
 }
