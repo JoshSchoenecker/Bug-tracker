@@ -3,6 +3,7 @@
     <!-- NOTE Flaw Details -->
     <div class="row mt-5 pt-5">
       <div class="card w-75 m-auto shadow">
+        <!-- Buttons -->
         <button class="text-danger" @click="deleteFlaw()">
           <span>&times;</span>
         </button>
@@ -22,6 +23,11 @@
             >Confirm</button>
           </form>
         </span>
+        <!-- change status button -->
+        <button class="btn" v-if="!flaw.closed" @click="closeFlaw()">
+        Flaw Fixed
+        </button>
+
         <div class="col-6">
           <!-- Flaw Title -->
           <div class="card-title">
@@ -41,7 +47,10 @@
         <div class="col-6 text-right align-self-end pr-5">
           <h5>
             <span class="pr-3" style="text-decoration: underline">Status</span>
-            <h2 style="text-transform: uppercase">{{flaw.closed}}</h2>
+            <h2 style="text-transform: uppercase">
+              <div v-if="flaw.closed == false"> Open </div>
+              <div v-else> Closed </div>
+              </h2>
           </h5>
         </div>
         <!-- Description of Flaw -->
@@ -69,7 +78,7 @@
       </div>
 
       <!-- Notes  are injected here -->
-      <note v-for="note in notes" :noteData="note" :key="note._id" />
+      <note v-for="note in notes" :noteData="note" :key="note.id" />
     </div>
 
     <!-- Create Note injected here -->
@@ -111,11 +120,16 @@ export default {
       this.$store.dispatch('editFlaw', this.flaw)
       this.editing = false;
     },
+    // TODO close flaw not working yet bad request, check store
+    closeFlaw(){
+      debugger
+      let closeFlaw = this.flaw.closed
+      this.$store.dispatch('closeFlaw', closeFlaw)
+    },
   },
   components: { Note, CreateNote },
   mounted() {
     this.$store.dispatch("getFlaw", this.$route.params.flawId);
-    this.$store.dispatch("getNotes", this.$route.params.flawId);
     console.log("mounted: ", this.$route.params.flawId);
   }
 };

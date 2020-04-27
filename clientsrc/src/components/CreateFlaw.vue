@@ -22,9 +22,9 @@
             />
             <button
               v-if="$auth.isAuthenticated"
-              type="button"
+              type="submit"
               class="btn btn-sm"
-              @click="createFlaw()"
+              @click.prevent="createFlaw"
             >Post Flaw</button>
           </form>
         </div>

@@ -34,6 +34,9 @@ class FlawService{
         }
         return data;
     }
+    async closeFlaw(id, userEmail, update){
+        await dbContext.Flaws.findOneAndUpdate(id, {closed: true})
+    }
 }
 
 export const flawService = new FlawService()

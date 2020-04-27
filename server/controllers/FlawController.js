@@ -5,6 +5,14 @@ import { flawService } from "../services/FlawService";
 import { noteService } from "../services/NoteService"
 
 export class FlawController extends BaseController {
+  async closeFlaw(req, res, next) {
+    try {
+      let data = await flawService.edit(req.params.id, req.userInfo.email);
+      return res.send(data);
+    } catch (error) {
+      next(error);
+    }
+  }
   async getNotesByFlawId(req, res, next) {
     try {
       let data = await noteService.getNotesByFlawId(req.params.id, req.userInfo.email)
@@ -66,6 +74,7 @@ try {
       .get("/:id/notes", this.getNotesByFlawId)
       .post("", this.create)
       .put("/:id", this.edit)
+      .put("/:id", this.closeFlaw)
       .delete("/:id", this.delete);
   }
 }
