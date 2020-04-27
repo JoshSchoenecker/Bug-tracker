@@ -21,14 +21,11 @@ export default {
     };
   },
   computed: {
-    activeFlawId() {
-      debugger
-      return this.$store.state.activeFlaw.id
-    }
+
   },
   methods: {
       addNote(){
-          this.newNote.flawId = this.activeFlawId
+          this.newNote.flawId = this.$store.state.activeFlaw.id
           this.$store.dispatch("addNote", this.newNote)
           this.newNote = {}
       },

@@ -74,20 +74,12 @@ export default new Vuex.Store({
         console.error(error);
       }
     },
-    async closeFlaw({ commit, dispatch}, flaw){
-      try {
-        let res = await api.put('flaws/' + flaw.id)
-        commit('setFlaw', res.data)
-      } catch (error) {
-        console.error();
-      }
-    },
+    
     // TODO edit now working for some reason backend?
-    async editFlaw({commit, dispatch}, flaw){
+    async editFlaw({dispatch}, flaw){
       try {
-        let res = await api.put('flaws/' + flaw.id)
+        let res = await api.put('flaws/' + flaw.id, flaw)
         dispatch('getFlaw', flaw.id)
-        commit('setFlaw', res.data)
       } catch (error) {
         console.error(error);
       }
@@ -97,19 +89,17 @@ export default new Vuex.Store({
     async getNotes({ commit }, flawId) {
       try {
         let res = await api.get("flaws/" + flawId + "/notes");
+        debugger
         console.log("store-getNotes: ", res.data);
         commit("setNotes", res.data);
       } catch (error) {
         console.error("Get Notes has failed: ", error);
       }
     },
-    async addNote({ dispatch }, noteId) {
+    async addNote({ dispatch }, newNote) {
       try {
-        // TODO returning weird data
-        debugger
-        let res = await api.post("notes/", noteId);
-        console.log("addNote: ", res);
-        dispatch("getNotes", noteId.flawId);
+        await api.post("notes/");
+        dispatch("getNotes", newNote.flawId);
       } catch (error) {
         console.error(error);
       }

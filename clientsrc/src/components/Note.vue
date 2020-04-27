@@ -20,9 +20,7 @@ export default {
     data(){
         return {}
     },
-    mounted(){
-        this.$store.dispatch("getFlaw", this.$route.params.flawId)
-    },
+    mounted(){},
     computed:{},
     methods:{},
     components:{}
