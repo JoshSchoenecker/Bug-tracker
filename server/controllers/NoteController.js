@@ -23,9 +23,8 @@ export class NoteController extends BaseController {
   }
   async create(req, res, next) {
     try {
-      req.body.ceatorEmail = req.userInfo.email;
-      let data = await noteService.create(req.content);
-      // returning status 201 gives us a Create succeded status
+      req.body.creatorEmail = req.userInfo.email
+      let data = await noteService.create(req.body);
       return res.status(201).send(data);
     } catch (error) {
       next(error);
