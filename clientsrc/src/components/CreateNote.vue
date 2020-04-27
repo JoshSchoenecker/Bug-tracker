@@ -3,7 +3,6 @@
     <form @submit.prevent="addNote()">
       <div class="form-group">
       <input type="text" class="form-control" placeholder="Add Note" v-model="newNote.content"/>
-      <input type="text" class="form-control" placeholder="Enter Email" v-model="newNote.creatorEmail"/>
       </div>
       <span>
       <button type="submit" class="btn">Send</button>

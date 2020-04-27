@@ -1,33 +1,28 @@
 <template>
-    <div class="note">
+  <div class="note">
     <div class="card-body border-top border-dark">
-        <div class="row">
-            <div class="col-12">
-                {{note.creatorEmail}}
-                {{note.content}}
-                <!-- TODO delete button for a note -->
-            </div>
-        </div>
+      {{noteData.creatorEmail}}
+      {{noteData.content}}
+      <!-- TODO delete button for a note -->
     </div>
-    </div>
+  </div>
 </template>
 
 
 <script>
 export default {
-    name: 'note',
-    props: ["noteData"],
-    data(){
-        return {}
-    },
-    mounted(){},
-    computed:{},
-    methods:{},
-    components:{}
-}
+  name: "note",
+  props: ["noteData"],
+  data() {
+    return {};
+  },
+  mounted() {},
+  computed: {},
+  methods: {},
+  components: {}
+};
 </script>
 
 
 <style scoped>
-
 </style>

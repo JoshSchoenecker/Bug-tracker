@@ -78,7 +78,7 @@
       </div>
 
       <!-- Notes  are injected here -->
-      <note v-for="note in notes" :noteData="note" :key="note.id" />
+      <Note v-for="note in notes" :noteData="note" :key="note.id" />
     </div>
 
     <!-- Create Note injected here -->
@@ -105,7 +105,7 @@ export default {
       return this.$store.state.activeFlaw;
     },
     notes() {
-      return this.$store.state.activeFlaw.notes;
+      return this.$store.state.notes;
       console.log("flawPage computed: ", this.$store.state.activeFlaw.notes);
     }
   },
@@ -133,6 +133,7 @@ export default {
   mounted() {
     this.$store.dispatch("getFlaw", this.$route.params.flawId);
     console.log("mounted: ", this.$route.params.flawId);
+    this.$store.dispatch("getNotes", this.$route.params.flawId)
   }
 };
 </script>

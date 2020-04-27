@@ -37,7 +37,7 @@ export default new Vuex.Store({
       state.activeFlaw = flaw;
     },
     setNotes(state, notes) {
-      state.notes = notes;
+      state.notes = notes
     },
   },
   actions: {
@@ -89,7 +89,6 @@ export default new Vuex.Store({
     async getNotes({ commit }, flawId) {
       try {
         let res = await api.get("flaws/" + flawId + "/notes");
-        debugger
         console.log("store-getNotes: ", res.data);
         commit("setNotes", res.data);
       } catch (error) {
@@ -98,7 +97,6 @@ export default new Vuex.Store({
     },
     async addNote({ dispatch }, newNote) {
       try {
-        debugger
         await api.post("notes/", newNote);
         dispatch("getNotes", newNote.flawId);
       } catch (error) {
