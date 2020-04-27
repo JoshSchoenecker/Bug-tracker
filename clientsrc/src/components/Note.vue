@@ -1,9 +1,17 @@
 <template>
   <div class="note">
-    <div class="card-body border-top border-dark">
-      {{noteData.creatorEmail}}
-      {{noteData.content}}
-      <!-- TODO delete button for a note -->
+    <div class="border-top border-dark">
+      <div class="row">
+        <div class="col-2">{{noteData.creatorEmail}}</div>
+        <div class="col-8">{{noteData.content}}</div>
+        <div class="col-2">
+          <button class="btn btn-lg" @click="deleteNote()" v-if="$auth.isAuthenticated">
+            <span class="text-danger">
+              <strong>X</strong>
+            </span>
+          </button>
+        </div>
+      </div>
     </div>
   </div>
 </template>
@@ -18,7 +26,13 @@ export default {
   },
   mounted() {},
   computed: {},
-  methods: {},
+  methods: {
+    deleteNote(){
+      if(confirm("Are you sure you want to remove this Note?")){
+      this.$store.dispatch("deleteNote", this.noteData)
+      }
+    }
+  },
   components: {}
 };
 </script>

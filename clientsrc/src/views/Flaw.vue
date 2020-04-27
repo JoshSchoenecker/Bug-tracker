@@ -9,7 +9,7 @@
         </button>
         <span>
           <button
-            v-if="$auth.isAuthenticated"
+            v-if="$auth.isAuthenticated && !flaw.closed"
             class="btn btn-warning shadow"
             @click="editing = !editing"
           >Edit Flaw</button>
@@ -24,14 +24,11 @@
           </form>
         </span>
         <!-- change status button -->
-        <button class="btn" v-if="!flaw.closed" @click="closeFlaw()">
-        Flaw Fixed
-        </button>
+        <button class="btn" v-if="!flaw.closed" @click="closeFlaw()">Flaw Fixed</button>
 
         <div class="col-6">
           <!-- Flaw Title -->
           <div class="card-title">
-            
             <h4 class="mb-0 mt-4">Flaw</h4>
             <h1 class="pl-2" style="font-size:5rem">{{flaw.title}}</h1>
           </div>
@@ -48,9 +45,9 @@
           <h5>
             <span class="pr-3" style="text-decoration: underline">Status</span>
             <h2 style="text-transform: uppercase">
-              <div v-if="!flaw.closed"> Open </div>
-              <div v-else> Closed </div>
-              </h2>
+              <div v-if="!flaw.closed">Open</div>
+              <div v-else>Closed</div>
+            </h2>
           </h5>
         </div>
         <!-- Description of Flaw -->
@@ -97,7 +94,7 @@ export default {
   name: "flaw",
   data() {
     return {
-      editing: false,
+      editing: false
     };
   },
   computed: {
@@ -110,30 +107,29 @@ export default {
     }
   },
   methods: {
-    deleteFlaw(){
-      let deleteFlaw = this.$route.params.flawId
+    deleteFlaw() {
+      let deleteFlaw = this.$route.params.flawId;
       console.log(this.$route.params.flawId);
-      this.$store.dispatch('deleteFlaw', deleteFlaw)
+      this.$store.dispatch("deleteFlaw", deleteFlaw);
       this.$router.push({ name: "FlawsPage" });
     },
-    // editFlaw(){
-    //   this.$store.dispatch('editFlaw', this.flaw)
-    //   this.editing = false;
-    // },
-
-    closeFlaw(){
-      if(confirm("Close Flaw? This can not be undone!")){
-      let closeFlaw = this.flaw
-      closeFlaw.closed = true
-      this.$store.dispatch('editFlaw', closeFlaw)
-      }
+    editFlaw(){
+      this.$store.dispatch('editFlaw', this.flaw)
+      this.editing = false;
     },
+    closeFlaw() {
+      if (confirm("Close Flaw? This can not be undone!")) {
+        let closeFlaw = this.flaw;
+        closeFlaw.closed = true;
+        this.$store.dispatch("editFlaw", closeFlaw);
+      }
+    }
   },
   components: { Note, CreateNote },
   mounted() {
     this.$store.dispatch("getFlaw", this.$route.params.flawId);
     console.log("mounted: ", this.$route.params.flawId);
-    this.$store.dispatch("getNotes", this.$route.params.flawId)
+    this.$store.dispatch("getNotes", this.$route.params.flawId);
   }
 };
 </script>
