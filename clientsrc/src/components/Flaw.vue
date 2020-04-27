@@ -27,11 +27,13 @@
                   <h5>Status</h5>
                   <hr />
                 </div>
-                <div class="card-body pt-0 text-capitalize" v-if="flawData.closed == false">
-                Open
+                <div
+                  class="card-body pt-0 rounded bg-success text-capitalize"
+                  v-if="!flawData.closed">
+                  <h3>Open</h3>
                 </div>
-                <div v-else class="card-body pt-0 text-capitalize">
-                  Closed
+                <div v-else class="card-body pt-0 rounded bg-danger text-capitalize">
+                  <h3>Closed</h3>
                 </div>
               </div>
               <!-- Timestamp -->
@@ -50,13 +52,15 @@
   </div>
 </template>
 
-
 <script>
+  import moment from 'moment'
 export default {
   name: "Flaw",
   props: ["flawData"],
   data() {
-    return {};
+    return {
+      closed: false,
+    };
   },
   computed: {},
   methods: {
@@ -66,7 +70,8 @@ export default {
         name: "flaw",
         params: { flawId: this.flawData._id }
       });
-    }
+    },
+    
   },
   components: {}
 };

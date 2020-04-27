@@ -48,7 +48,7 @@
           <h5>
             <span class="pr-3" style="text-decoration: underline">Status</span>
             <h2 style="text-transform: uppercase">
-              <div v-if="flaw.closed == false"> Open </div>
+              <div v-if="!flaw.closed"> Open </div>
               <div v-else> Closed </div>
               </h2>
           </h5>
@@ -116,15 +116,17 @@ export default {
       this.$store.dispatch('deleteFlaw', deleteFlaw)
       this.$router.push({ name: "FlawsPage" });
     },
-    editFlaw(){
-      this.$store.dispatch('editFlaw', this.flaw)
-      this.editing = false;
-    },
-    // TODO close flaw not working yet bad request, check store
+    // editFlaw(){
+    //   this.$store.dispatch('editFlaw', this.flaw)
+    //   this.editing = false;
+    // },
+
     closeFlaw(){
-      debugger
-      let closeFlaw = this.flaw.closed
-      this.$store.dispatch('closeFlaw', closeFlaw)
+      if(confirm("Close Flaw? This can not be undone!")){
+      let closeFlaw = this.flaw
+      closeFlaw.closed = true
+      this.$store.dispatch('editFlaw', closeFlaw)
+      }
     },
   },
   components: { Note, CreateNote },
