@@ -1,6 +1,5 @@
 <template>
-  <div class="home vh-100">
-  </div>
+  <div class="home vh-100"></div>
 </template>
 
 <script>

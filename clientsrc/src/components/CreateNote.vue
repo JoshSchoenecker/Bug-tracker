@@ -2,13 +2,13 @@
   <div class="CreateNote">
     <form @submit.prevent="addNote()">
       <div class="form-group">
-      <input type="text" class="form-control" placeholder="Add Note" v-model="newNote.content"/>
+        <input type="text" class="form-control" placeholder="Add Note" v-model="newNote.content" />
       </div>
       <span>
-      <button type="submit" class="btn">Send</button>
+        <button type="submit" class="btn">Send</button>
       </span>
-  </form>
-    </div>
+    </form>
+  </div>
 </template>
 
 <script>
@@ -19,16 +19,13 @@ export default {
       newNote: {}
     };
   },
-  computed: {
-  
-  },
+  computed: {},
   methods: {
-      addNote(){
-        debugger
-          this.newNote.flawId = this.$store.state.activeFlaw.id
-          this.$store.dispatch("addNote", this.newNote)
-          this.newNote = {}
-      },
+    addNote() {
+      this.newNote.flawId = this.$store.state.activeFlaw.id;
+      this.$store.dispatch("addNote", this.newNote);
+      this.newNote = {};
+    }
   },
   components: {}
 };

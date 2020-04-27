@@ -18,8 +18,8 @@ export default {
     }
   },
   components: {
-    Navbar,
-  },
+    Navbar
+  }
 };
 </script>
 

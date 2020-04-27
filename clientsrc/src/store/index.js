@@ -30,14 +30,14 @@ export default new Vuex.Store({
     setFlaws(state, flaws) {
       state.flaws = flaws;
     },
-    setFlaw(state, flaw){
-      state.flaw = flaw
+    setFlaw(state, flaw) {
+      state.flaw = flaw;
     },
     setActiveFlaw(state, flaw) {
       state.activeFlaw = flaw;
     },
     setNotes(state, notes) {
-      state.notes = notes
+      state.notes = notes;
     },
   },
   actions: {
@@ -68,18 +68,18 @@ export default new Vuex.Store({
     },
     async deleteFlaw({ dispatch }, flawId) {
       try {
-        await api.delete('flaws/' + flawId)
-        dispatch('getFlaws')
+        await api.delete("flaws/" + flawId);
+        dispatch("getFlaws");
       } catch (error) {
         console.error(error);
       }
     },
-    
+
     // TODO edit now working for some reason backend?
-    async editFlaw({dispatch}, flaw){
+    async editFlaw({ dispatch }, flaw) {
       try {
-        let res = await api.put('flaws/' + flaw.id, flaw)
-        dispatch('getFlaw', flaw.id)
+        let res = await api.put("flaws/" + flaw.id, flaw);
+        dispatch("getFlaw", flaw.id);
       } catch (error) {
         console.error(error);
       }
@@ -99,6 +99,14 @@ export default new Vuex.Store({
       try {
         await api.post("notes/", newNote);
         dispatch("getNotes", newNote.flawId);
+      } catch (error) {
+        console.error(error);
+      }
+    },
+    async deleteNote({dispatch}, note){
+      try {
+        await api.delete('notes/' + note.id)
+        dispatch("getNotes", note.flawId)
       } catch (error) {
         console.error(error);
       }

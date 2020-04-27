@@ -46,7 +46,6 @@ export default {
   methods: {
     createFlaw() {
       this.$store.dispatch("createFlaw", this.newFlaw);
-      debugger
       this.newFlaw = {};
     }
   },

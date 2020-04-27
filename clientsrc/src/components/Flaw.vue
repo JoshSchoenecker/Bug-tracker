@@ -29,7 +29,8 @@
                 </div>
                 <div
                   class="card-body pt-0 rounded bg-success text-capitalize"
-                  v-if="!flawData.closed">
+                  v-if="!flawData.closed"
+                >
                   <h3>Open</h3>
                 </div>
                 <div v-else class="card-body pt-0 rounded bg-danger text-capitalize">
@@ -53,13 +54,13 @@
 </template>
 
 <script>
-  import moment from 'moment'
+import moment from "moment";
 export default {
   name: "Flaw",
   props: ["flawData"],
   data() {
     return {
-      closed: false,
+      closed: false
     };
   },
   computed: {},
@@ -70,8 +71,7 @@ export default {
         name: "flaw",
         params: { flawId: this.flawData._id }
       });
-    },
-    
+    }
   },
   components: {}
 };
